@@ -1,0 +1,106 @@
+ <section class="prediction">
+    <div class="prediction__intro intro">
+      <div class="intro__wrapper">
+        <h1 class="intro__title">Система прогнозирования паводка</h1>
+        <b class="intro__description">Панель управления</b>
+      </div>
+      <button class="intro__button map-button" [routerLink]="['']">Открыть карту постов</button>
+    </div>
+    <div class="prediction__content content">
+      <div class="content__column">
+        <app-measure></app-measure>
+        <section class="results">
+          <h2 class="results__title">Результаты прогноза</h2>
+          <p class="results_description" *ngIf="predictResult.length === 1">Результаты прогноза на <span class="results_date">{{predictResult[0].date * 1000 | date: 'dd.MM.YYYY'}}</span></p>
+          <p class="results_description" *ngIf="predictResult.length > 1">Результаты прогноза за указанный период (<span class="results_date">{{predictResult[0].date * 1000 | date: 'dd.MM.YYYY'}}</span> - <span class="results__date">{{predictResult[predictResult.length - 1].date * 1000 | date: 'dd.MM.YYYY'}}</span>)</p>
+          <div class="table-wrapper">
+            <table class="results__table analytics" *ngIf="predictResult.length > 0">
+              <tr class="analytics__row">
+                <th class="analytics__title analytics__cell--left">День</th>
+                <th class="analytics__title analytics__cell--left">Дата</th>
+                <th class="analytics__title">Прогноз</th>
+                <th class="analytics__title analytics__cell--right">Фактическое значение</th>
+                <th class="analytics__title analytics__cell--right">Ошибка</th>
+              </tr>
+              <tr class="analytics__row" *ngFor="let predict of predictResult; let i = index">
+                <td class="analytics__cell analytics__cell--left">{{i+1}}</td>
+                <td class="analytics__cell analytics__cell--left">{{predict.date * 1000 | date: 'dd.MM.YYYY'}}</td>
+                <td class="analytics__cell">{{predict.forecast_value}}см</td>
+                <td class="analytics__cell analytics__cell--right">{{predict.actual_value}}см</td>
+                <td class="analytics__cell analytics__cell--right">{{predict.error}}</td>
+              </tr>
+            </table>
+          </div>
+        </section>
+      </div>
+      <div class="content__column">
+        <section class="predict-settings settings">
+          <div class="settings__intro">
+            <h2 class="settings__title">Выполнить прогноз</h2>
+            <p class="settings__status" *ngIf="predictStatus === 'in_process'">Ваш прогноз выполняется...</p>
+            <p class="settings__status" *ngIf="predictStatus === 'limit'">Превышено время ожидания</p>
+          </div>
+          <form action="" class="settings__form form-settings" method="post" [formGroup]="predictionForm" (ngSubmit)="predictStart()">
+            <fieldset class="form-settings__days days">
+              <legend class="days__title">Количество дней</legend>
+              <div class="days__current current">
+                <input type="checkbox" class="current__check visually-hidden" id="predict-current-date" (change)="changeCurrent($event)">
+                <label for="predict-current-date" class="current__label">Прогноз от текущей даты</label>
+              </div>
+              <div>
+                <div class="any-predict" *ngIf="!currentDatePredict">
+                  <mat-form-field appearance="fill" color="accent">
+                    <mat-label>Дни прогноза</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate placeholder="Start date" formControlName="startDate">
+                      <input matEndDate placeholder="End date" formControlName="finishDate">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="current-predict" *ngIf="currentDatePredict">
+                <div class="days__wrapper">
+                  <input type="radio" class="days__radio visually-hidden" id="days-radio1" value="1" name="days" formControlName="days">
+                  <label for="days-radio1" class="days__label">1</label>
+                </div>
+                <div class="days__wrapper">
+                  <input type="radio" class="days__radio visually-hidden" id="days-radio2" value="2" name="days" formControlName="days">
+                  <label for="days-radio2" class="days__label">2</label>
+                </div>
+                <div class="days__wrapper">
+                  <input type="radio" class="days__radio visually-hidden" id="days-radio3" value="3" name="days" formControlName="days">
+                  <label for="days-radio3" class="days__label">3</label>
+                </div>
+                <div class="days__wrapper">
+                  <input type="radio" class="days__radio visually-hidden" id="days-radio4" value="4" name="days" formControlName="days">
+                  <label for="days-radio4" class="days__label">4</label>
+                </div>
+                <div class="days__wrapper">
+                  <input type="radio" class="days__radio visually-hidden" id="days-radio5" value="5" name="days" formControlName="days">
+                  <label for="days-radio5" class="days__label">5</label>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="form-settings__format format">
+              <legend class="format__title">Формат прогноза</legend>
+              <div class="format__wrapper">
+                <input type="radio" class="format__radio visually-hidden" id="format-radio--decimal" value="decimal" name="format">
+                <label for="format-radio--decimal" class="format__label">Вещественное</label>
+              </div>
+              <div class="format__wrapper">
+                <input type="radio" class="format__radio visually-hidden" id="format-radio--integer" value="integer" name="format" checked>
+                <label for="format-radio--integer" class="format__label">Целочисленное</label>
+              </div>
+            </fieldset>
+            <button class="settings__button" type="submit">Выполнить прогноз</button>
+          </form>
+          <p class="form-error" *ngIf="formError">{{formError}}</p>
+        </section>
+        <app-add-measure></app-add-measure>
+        <app-education></app-education>
+      </div>
+    </div>
+  </section>
+

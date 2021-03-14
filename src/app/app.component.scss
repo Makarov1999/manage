@@ -1,0 +1,19 @@
+.auth-message {
+  box-sizing: border-box;
+  width: 250px;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  z-index: 1000;
+}
+
+.auth-message__text {
+  font-family: Roboto, Arial, sans-serif;
+  color: #222222;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 700;
+}

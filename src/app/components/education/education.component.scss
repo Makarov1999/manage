@@ -1,0 +1,121 @@
+.education {
+  margin-top: 30px;
+  &__title {
+    margin: 0;
+    padding: 0;
+    font-family: Roboto, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    padding-bottom: 10px;
+    color: #222222;
+  }
+  &__description {
+    margin: 0;
+    padding: 0;
+    font-family: Roboto, Arial, sans-serif;
+    color: #888888;
+    font-size: 14px;
+    line-height: 20px;
+    padding-bottom: 20px;
+  }
+  .training {
+    &__wrapper {
+      display: flex;
+      width: 100%;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      padding-bottom: 15px;
+    }
+    &__title, &__title--check {
+      font-family: Roboto, Arial, sans-serif;
+      color: #888888;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+    &__value {
+      margin: 0;
+      padding: 0;
+      border: 1px solid #e0e0e0;
+      padding: 5px;
+      border-radius: 5px;
+      font-family: Roboto, Arial, sans-serif;
+      color: #222222;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+      margin-left: 5px;
+      margin-right: 5px;
+      flex-grow: 1;
+    }
+  }
+}
+
+.training__title--check {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 107px;
+    width: 19px;
+    height: 19px;
+    border: 1px solid #888888;
+  }
+}
+
+.training__value--check:checked + .training__title--check::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 108px;
+  width: 16px;
+  height: 16px;
+  background-color: #0c83c7;
+}
+
+.education__progress {
+  position: relative;
+  z-index: 1;
+  height: 20px;
+  width: 100%;
+  background-color: #e5e5e5;
+  border: 1px solid #444444;
+}
+
+
+
+.education__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 50%;
+  height: 20px;
+  background-color: #0c83c7;
+}
+
+.education__value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.education__button {
+  display: block;
+  width: auto;
+  border: none;
+  color: #000000;
+  font-family: Roboto, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  background-color: #ecc746;
+  padding: 8px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}

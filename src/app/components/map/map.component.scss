@@ -1,0 +1,133 @@
+.map {
+  width: 100%;
+}
+.map-container {
+  width: 100%;
+  height: 1000px;
+}
+.marker-popup__link {
+  display: block;
+  padding: 5px;
+  color: #222222;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 19px;
+  background-color: #e5e5e5;
+  text-align: center;
+  border-radius: 4px;
+
+}
+
+.marker-popup {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  width: 200px;
+  box-sizing: border-box;
+  padding: 25px;
+}
+
+.marker-popup__container {
+  position: relative;
+}
+@media (min-width: 1220px) {
+  app-map {
+    width: 80%;
+  }
+  .marker-popup {
+    width: 350px;
+  }
+  .map {
+    width: 100%;
+    position: relative;
+  }
+
+  .map-container {
+    width: 900px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .map-container {
+    width: 1100px;
+  };
+}
+
+@media (min-width: 1500px) {
+  .map-container {
+    width: 1200px;
+  };
+}
+
+@media (min-width: 1600px) {
+  .map-container {
+    width: 1300px;
+  };
+}
+.marker-popup__wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-bottom: 20px;
+  flex-wrap: wrap;
+
+}
+
+.marker-popup__title {
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 700;
+  color: #222222;
+  margin: 0 15px 0 0;
+}
+
+.marker-popup__value {
+  margin: 0;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #888888;
+}
+
+.active {
+  display: block;
+}
+
+.marker-popup__close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  opacity: 0.6;
+  cursor: pointer;
+  &:hover, &:focus {
+    opacity: 0.9;
+  }
+  &:active {
+    opacity: 0.4;
+  }
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 2px;
+    background-color: #ff0000;
+  }
+  &::before {
+    transform: rotate(45deg);
+  }
+  &::after {
+    transform: rotate(-45deg);
+  }
+}
+

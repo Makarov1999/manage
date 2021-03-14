@@ -1,0 +1,42 @@
+<!--<div class="page-main__wrapper">-->
+  <section class="map">
+    <div class="map-container">
+      <ya-map [center]="[54.7431, 55.9678]" [zoom]="12">
+
+        <ya-placemark *ngFor="let st of stations" [geometry]="[st.location.latitude, st.location.longitude]" (yaclick)="openStationInfo(st)" [options]="placemarkOptions" >
+        </ya-placemark>
+        <ya-geoobject
+          [feature]="{ geometry: { type: 'Polygon', coordinates: border} }"
+        ></ya-geoobject>
+      </ya-map>
+    </div>
+    <div class="marker-popup" [ngClass]="{active: isPopupOpen}">
+      <div class="marker-popup__container">
+        <button class="marker-popup__close-btn" type="button" (click)="popupClose()"></button>
+        <div class="marker-popup__wrapper">
+          <h4 class="marker-popup__title">Название: </h4>
+          <p class="marker-popup__value">{{currentMarker.name}}</p>
+        </div>
+        <div class="marker-popup__wrapper">
+          <h4 class="marker-popup__title">Тип гидропоста</h4>
+          <p class="marker-popup__value">{{currentMarker.type === 'auto' ? 'Автоматическая станция':'Гидропост'}}</p>
+        </div>
+        <div class="marker-popup__wrapper">
+          <h4 class="marker-popup__title">Широта: </h4>
+          <p class="marker-popup__value">{{currentMarker.location.latitude}}</p>
+        </div>
+        <div class="marker-popup__wrapper">
+          <h4 class="marker-popup__title">Долгота :</h4>
+          <p class="marker-popup__value">{{currentMarker.location.longitude}}</p>
+        </div>
+      </div>
+      <a [routerLink]="['/manage/', currentMarker.id]" class="marker-popup__link">Перейти в панель управления</a>
+    </div>
+  </section>
+
+<!--</div>-->
+
+
+
+
+

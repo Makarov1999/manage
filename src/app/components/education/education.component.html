@@ -1,0 +1,29 @@
+<section class="education">
+  <h2 class="education__title">Обучение нейронной сети</h2>
+  <p class="education__description">Запуск обчения нейронной сети</p>
+  <form action="" class="education__form training" [formGroup]="educationForm" (ngSubmit)="educationSubmit()">
+    <div class="training__wrapper">
+      <label class="training__title" for="ed-date">Дата</label>
+      <input class="training__value" type="date" id="ed-date" name="ed-date" formControlName="date">
+    </div>
+    <div class="training__wrapper">
+      <label class="training__title" for="ed-depth">Глубина</label>
+      <input class="training__value" type="text" id="ed-depth" name="ed-depth" formControlName="depth">
+    </div>
+    <div class="training__wrapper">
+      <label class="training__title" for="ed-horizon">Горизонт</label>
+      <input class="training__value" type="text" id="ed-horizon" name="ed-horizon" formControlName="horizon">
+    </div>
+    <div class="training__wrapper">
+      <input class="visually-hidden training__value--check" type="checkbox" id="ed-restore" name="ed-restore" value="restore" formControlName="restore">
+      <label class="training__title--check" for="ed-restore">Бекап моделей</label>
+    </div>
+    <button class="education__button" type="submit">Начать</button>
+  </form>
+  <div class="form-error" *ngIf="formError">{{formError}}</div>
+  <div class="form-success" *ngIf="formSuccess">{{formSuccess}}</div>
+  <div class="education__progress" *ngIf="barValue">
+    <b class="education__value">{{barValue}}</b>
+    <span class="education__bar" [ngStyle]="{width: barValue}"></span>
+  </div>
+</section>

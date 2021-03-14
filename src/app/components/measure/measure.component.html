@@ -1,0 +1,26 @@
+<section class="content__chart chart">
+  <div class="chart__intro update">
+    <div class="update__wrapper">
+      <h2 class="update__title">Уровни воды за неделю</h2>
+      <p class="update__description">Отображаются данные уровня воды за последние 7 дней (<span class="update__date">{{startDate}}</span> - <span class="update__date">{{finishDate}}</span>)</p>
+    </div>
+    <div class="update__activate">
+      <svg width="20" height="23" viewBox="0 0 20 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.29289 0.292893C8.68342 -0.0976311 9.31658 -0.0976311 9.70711 0.292893L12.7071 3.29289C13.0976 3.68342 13.0976 4.31658 12.7071 4.70711L9.70711 7.70711C9.31658 8.09763 8.68342 8.09763 8.29289 7.70711C7.90237 7.31658 7.90237 6.68342 8.29289 6.29289L9.57342 5.01118C5.35347 5.23289 2 8.72482 2 13C2 17.4183 5.58172 21 10 21C14.4183 21 18 17.4183 18 13C18 11.0052 17.2684 9.12679 15.966 7.67006C15.5979 7.25834 15.6332 6.62616 16.045 6.25805C16.4567 5.88994 17.0889 5.92529 17.457 6.33701C19.0841 8.15693 20 10.5086 20 13C20 18.5228 15.5228 23 10 23C4.47715 23 0 18.5228 0 13C0 7.61352 4.25878 3.22174 9.59285 3.00814L8.29289 1.70711C7.90237 1.31658 7.90237 0.683418 8.29289 0.292893Z" fill="#0C83C7"/>
+      </svg>
+      <button class="update__button" (click)="updateChart()">Обновить данные</button>
+    </div>
+
+  </div>
+  <div class="chart__graph" *ngIf="levels.length > 1">
+    <canvas baseChart
+            [datasets]="chartData"
+            [labels]="chartLabels"
+            [options]="chartOptions"
+            [colors]="chartColors"
+            [legend]="chartLegend"
+            [chartType]="mychartType"
+            [plugins]="chartPlugins">
+    </canvas>
+  </div>
+</section>

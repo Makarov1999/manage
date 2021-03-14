@@ -1,0 +1,36 @@
+.current {
+  padding-left: 30px;
+  padding-bottom: 20px;
+}
+.current__label {
+  position: relative;
+  font-family: Roboto, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #222222;
+  box-sizing: border-box;
+}
+
+.current__check + .current__label::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -25px;
+  width: 19px;
+  height: 19px;
+  background-color: transparent;
+  border: 2px solid #888888;
+
+}
+
+.current__check:checked + .current__label::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: -22px;
+  width: 13px;
+  height: 13px;
+  background-color: #0c83c7;
+}
+

@@ -1,0 +1,43 @@
+<section class="add-data">
+  <h2 class="add-data__title">Добавить данные</h2>
+  <p class="add-data__description">Добавление данных измерений уровня воды для текущего гидропоста.</p>
+  <form action="" class="add-data__form form-add" [formGroup]="addForm" (ngSubmit)="addFactData()">
+    <div class="form-add__wrapper">
+      <label for="add-date" class="form-add__label">Дата</label>
+      <input type="date" class="form-add__value" placeholder="07.02.2021" id="add-date" formControlName="date">
+    </div>
+    <div class="form-add__wrapper">
+      <label for="add-level" class="form-add__label">Уровень воды</label>
+      <input type="text" class="form-add__value" id="add-level" placeholder="500" formControlName="level">
+      <small class="form-add__measure">см</small>
+    </div>
+    <div class="form-add__wrapper">
+      <label for="add-temperature" class="form-add__label" >Температура воздуха</label>
+      <input type="text" class="form-add__value" id="add-temperature" placeholder="10" formControlName="temperature">
+      <small class="form-add__measure">&#8451;</small>
+    </div>
+    <div class="form-add__wrapper">
+      <label for="add-pressure" class="form-add__label">Атмосферное давление</label>
+      <input type="text" class="form-add__value" id="add-pressure" placeholder="760" formControlName="pressure">
+      <small class="form-add__measure">мм рт. ст.</small>
+    </div>
+    <div class="form-add__wrapper">
+      <label for="add-wind" class="form-add__label">Скрость ветра</label>
+      <input type="text" class="form-add__value" id="add-wind" placeholder="2" formControlName="wind">
+      <small class="form-add__measure">м/с</small>
+    </div>
+    <div class="form-add__wrapper">
+      <label for="add-snow" class="form-add__label">Толщина снежного покрова</label>
+      <input type="text" class="form-add__value" id="add-snow" placeholder="58" formControlName="snow">
+      <small class="form-add__measure">см</small>
+    </div>
+    <div class="form-add__wrapper">
+      <label for="add-fallout" class="form-add__label">Количесство осадков</label>
+      <input type="text" class="form-add__value" id="add-fallout" placeholder="56" formControlName="fallout">
+      <small class="form-add__measure">мм</small>
+    </div>
+    <button type="submit" class="form-add__button">Добавить</button>
+  </form>
+  <p class="form-error" *ngIf="formError">{{formError}}</p>
+  <p class="form-success" *ngIf="formSuccess">{{formSuccess}}</p>
+</section>
