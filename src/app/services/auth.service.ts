@@ -40,7 +40,7 @@ export class AuthService {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(this.isAuth);
-      }, 1000);
+      }, 100);
     });
 
   }

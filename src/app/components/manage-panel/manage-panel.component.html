@@ -25,13 +25,15 @@
               <tr class="analytics__row" *ngFor="let predict of predictResult; let i = index">
                 <td class="analytics__cell analytics__cell--left">{{i+1}}</td>
                 <td class="analytics__cell analytics__cell--left">{{predict.date * 1000 | date: 'dd.MM.YYYY'}}</td>
-                <td class="analytics__cell">{{predict.forecast_value}}см</td>
-                <td class="analytics__cell analytics__cell--right">{{predict.actual_value}}см</td>
-                <td class="analytics__cell analytics__cell--right">{{predict.error}}</td>
+                <td class="analytics__cell">{{formatPredict === 'decimal' ? predict.forecast_value : predict.forecast_value | number: '1.0-0'}}см</td>
+                <td class="analytics__cell analytics__cell--right">{{predict.actual_value ? predict.actual_value + 'см': '-'}}</td>
+                <td class="analytics__cell analytics__cell--right">{{predict.actual_value ? predict.error: '-'}}</td>
               </tr>
             </table>
           </div>
         </section>
+        <app-add-external></app-add-external>
+        <app-reports></app-reports>
       </div>
       <div class="content__column">
         <section class="predict-settings settings">
@@ -39,13 +41,22 @@
             <h2 class="settings__title">Выполнить прогноз</h2>
             <p class="settings__status" *ngIf="predictStatus === 'in_process'">Ваш прогноз выполняется...</p>
             <p class="settings__status" *ngIf="predictStatus === 'limit'">Превышено время ожидания</p>
+            <p class="settings__status" *ngIf="predictAllStart">Прогноз по всем постам успешно запущен</p>
           </div>
           <form action="" class="settings__form form-settings" method="post" [formGroup]="predictionForm" (ngSubmit)="predictStart()">
             <fieldset class="form-settings__days days">
-              <legend class="days__title">Количество дней</legend>
+              <legend class="days__title">Параметры прогноза</legend>
               <div class="days__current current">
                 <input type="checkbox" class="current__check visually-hidden" id="predict-current-date" (change)="changeCurrent($event)">
                 <label for="predict-current-date" class="current__label">Прогноз от текущей даты</label>
+              </div>
+              <div class="days__meteo meteo">
+                <input type="checkbox" class="meteo__check visually-hidden" id="meteo" formControlName="meteo" [(ngModel)]="meteo">
+                <label for="meteo" class="meteo__label">С учетом температуры</label>
+              </div>
+              <div class="days__all all">
+                <input type="checkbox" class="all__check visually-hidden" id="all" formControlName="all" [(ngModel)]="all">
+                <label for="all" class="all__label">По всем постам</label>
               </div>
               <div>
                 <div class="any-predict" *ngIf="!currentDatePredict">
@@ -86,16 +97,18 @@
             <fieldset class="form-settings__format format">
               <legend class="format__title">Формат прогноза</legend>
               <div class="format__wrapper">
-                <input type="radio" class="format__radio visually-hidden" id="format-radio--decimal" value="decimal" name="format">
+                <input type="radio" class="format__radio visually-hidden" id="format-radio--decimal" value="decimal" name="format" checked formControlName="format">
                 <label for="format-radio--decimal" class="format__label">Вещественное</label>
               </div>
               <div class="format__wrapper">
-                <input type="radio" class="format__radio visually-hidden" id="format-radio--integer" value="integer" name="format" checked>
+                <input type="radio" class="format__radio visually-hidden" id="format-radio--integer" value="integer" name="format" formControlName="format">
                 <label for="format-radio--integer" class="format__label">Целочисленное</label>
               </div>
             </fieldset>
             <button class="settings__button" type="submit">Выполнить прогноз</button>
+<!--            <button class="settings__button settings__button&#45;&#45;report" type="button" (click)="getReport()">Сформировать отчет</button>-->
           </form>
+          <a *ngIf="reportLink" [href]="reportLink" class="settings__link--report">Получить отчет</a>
           <p class="form-error" *ngIf="formError">{{formError}}</p>
         </section>
         <app-add-measure></app-add-measure>

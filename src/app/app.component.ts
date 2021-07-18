@@ -7,11 +7,14 @@ export interface Location {
   latitude: number;
   longitude: number;
 }
+
 export interface Station {
   id: number;
   type: string;
   name: string;
   location: Location;
+  flood: number;
+  floodplain: number;
 }
 
 export interface ApiAnswerStations {
@@ -94,11 +97,19 @@ export class AppComponent implements OnInit {
           this.isAuthMessageOpen = false;
         }, 2000);
       } else {
-        this.authMessageText = 'Произошла ошибка при выходе';
-        this.isAuthMessageOpen = true;
-        setTimeout(() => {
-          this.isAuthMessageOpen = false;
-        }, 4000);
+        if (!this.auth.getAuth()) {
+          this.authMessageText = 'Вход не был выполнен';
+          this.isAuthMessageOpen = true;
+          setTimeout(() => {
+            this.isAuthMessageOpen = false;
+          }, 4000);
+        } else {
+          this.authMessageText = 'Произошла ошибка при выходе';
+          this.isAuthMessageOpen = true;
+          setTimeout(() => {
+            this.isAuthMessageOpen = false;
+          }, 4000);
+        }
       }
     });
 

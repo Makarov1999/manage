@@ -7,8 +7,7 @@ import {StationResolver} from './station.resolver';
 
 const routes: Routes = [
   {path: '', component: MapComponent, resolve: {station: StationResolver}},
-  {path: 'manage/:id', component: ManagePanelComponent, canActivate: [AuthQuard]},
-  {path: '**', component: MapComponent, resolve: {station: StationResolver}}
+  {path: 'manage/:id', component: ManagePanelComponent, canActivate: [AuthQuard]}
 ];
 
 @NgModule({

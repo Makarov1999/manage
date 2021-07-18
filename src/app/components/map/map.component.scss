@@ -1,10 +1,23 @@
 .map {
   width: 100%;
+  height: 700px;
+  position: relative;
+
 }
 .map-container {
   width: 100%;
   height: 1000px;
 }
+.map-search, .map-zones {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  background-color: #ffffff;
+  padding: 25px;
+}
+
+
 .marker-popup__link {
   display: block;
   padding: 5px;
@@ -19,7 +32,6 @@
 }
 
 .marker-popup {
-  display: none;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -28,6 +40,7 @@
   width: 200px;
   box-sizing: border-box;
   padding: 25px;
+  z-index: 3000;
 }
 
 .marker-popup__container {
@@ -35,38 +48,25 @@
 }
 @media (min-width: 1220px) {
   app-map {
-    width: 80%;
+    width: 100%;
   }
   .marker-popup {
     width: 350px;
+    z-index: 3000;
   }
   .map {
     width: 100%;
+    height: 1000px;
     position: relative;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .map-container {
-    width: 900px;
+    width: 100%;
   }
 }
 
-@media (min-width: 1400px) {
-  .map-container {
-    width: 1100px;
-  };
-}
-
-@media (min-width: 1500px) {
-  .map-container {
-    width: 1200px;
-  };
-}
-
-@media (min-width: 1600px) {
-  .map-container {
-    width: 1300px;
-  };
-}
 .marker-popup__wrapper {
   width: 100%;
   display: flex;
@@ -131,3 +131,82 @@
   }
 }
 
+.map-buttons {
+  position: absolute;
+  top: 20px;
+  left: 60px;
+  width: 250px;
+  z-index: 1000;
+}
+.map-buttons__container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.map-buttons__container button{
+  margin-right: 15px;
+}
+
+.map-radio-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.map-radio-group mat-radio-button {
+  margin-bottom: 10px;
+}
+
+.map-search__button--close, .map-zones__button--close, .map-legend__button--close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.map-search__button--submit, .map-zones__button--submit {
+  margin-right: 20px;
+}
+.map-search__field {
+  position: relative;
+  z-index: 3000;
+}
+
+.map-form__container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.legend {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ffffff;
+  width: 250px;
+  box-sizing: border-box;
+  padding: 15px;
+  z-index: 2000;
+}
+
+.legend__caption {
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 19px;
+  color: #222222;
+}
+
+.legend__wrapper {
+  width: 200px;
+  justify-content: flex-start;
+}
+
+.legend__wrapper img {
+  width: 25px;
+  height: 41px;
+}
+
+.legend__title {
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  color: #222222;
+}

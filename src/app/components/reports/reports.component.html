@@ -1,0 +1,16 @@
+<section class="reports">
+  <h3 class="reports__title">Отчеты</h3>
+  <p class="reports__description">Формирование отчетов для проведения сравнительного анализа</p>
+  <form action="" class="reports__form" (ngSubmit)="createAnalysisReport()" [formGroup]="reportsForm">
+    <mat-form-field appearance="fill" color="accent">
+      <mat-label>Дата</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date" [required]="true">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button type="submit" class="reports__button--submit">Сформировать</button>
+    <a *ngIf="reportLink" [href]="reportLink" class="settings__link--report">Получить отчет</a>
+    <p class="form-error" *ngIf="formError">{{formError}}</p>
+  </form>
+
+</section>

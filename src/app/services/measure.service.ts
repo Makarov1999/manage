@@ -20,4 +20,13 @@ export class MeasureService {
     console.log(finishDate.format('YYYY-MM-DD'));
     return this.http.get<any>(`https://floodrb.ugatu.su/api/measurements.get?access_token=${accesToken}&post_id=${postId}&date_start=${startDate.format('YYYY-MM-DD')}&date_end=${finishDate.format('YYYY-MM-DD')}`);
   }
+  addExternalData(body: FormData): Observable<any> {
+    return this.http.post<any>('https://floodrb.ugatu.su/api/externalData.addEntry', body);
+  }
+  getMeasurementsForPosts(postIds: string, dateStart: string, dateEnd: string): Observable<any> {
+    return this.http.get<any>(`https://floodrb.ugatu.su/api/measurements.getByPostsIds?post_ids=${postIds}&date_start=${dateStart}&date_end=${dateEnd}`);
+  }
+  getMeasurementsByDate(accesToken: string, postId: string, dateStart: string, dateEnd: string): Observable<any> {
+    return this.http.get<any>(`https://floodrb.ugatu.su/api/measurements.get?access_token=${accesToken}&post_id=${postId}&date_start=${dateStart}&date_end=${dateEnd}`);
+  }
 }

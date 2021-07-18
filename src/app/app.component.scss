@@ -17,3 +17,15 @@
   line-height: 19px;
   font-weight: 700;
 }
+
+.content-wrapper {
+  width: 100%;
+  padding: 20px;
+}
+
+@media(min-width: 1220px) {
+  .content-wrapper {
+    width: 100%;
+    padding: 0;
+  }
+}

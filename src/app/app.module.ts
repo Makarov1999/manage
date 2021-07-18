@@ -9,7 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, MatOptionModule} from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
@@ -20,7 +20,12 @@ import { AddMeasureComponent } from './components/add-measure/add-measure.compon
 import { MeasureComponent } from './components/measure/measure.component';
 import {ChartsModule} from 'ng2-charts';
 import { EducationComponent } from './components/education/education.component';
-
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import { AddExternalComponent } from './components/add-external/add-external.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatRadioButton, MatRadioModule} from '@angular/material/radio';
+import {MatSelectModule} from '@angular/material/select';
+import { ReportsComponent } from './components/reports/reports.component';
 
 
 const mapConfig: YaConfig = {
@@ -34,26 +39,33 @@ const mapConfig: YaConfig = {
     ManagePanelComponent,
     AddMeasureComponent,
     MeasureComponent,
-    EducationComponent
+    EducationComponent,
+    AddExternalComponent,
+    ReportsComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        AngularYandexMapsModule.forRoot(mapConfig),
-        HttpClientModule,
-        FormsModule,
-        RouterModule,
-        BrowserAnimationsModule,
-        MatNativeDateModule,
-        MatFormFieldModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatInputModule,
-        MatIconModule,
-        ReactiveFormsModule,
-        CommonModule,
-        ChartsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    AngularYandexMapsModule.forRoot(mapConfig),
+    HttpClientModule,
+    FormsModule,
+    RouterModule,
+    BrowserAnimationsModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    CommonModule,
+    ChartsModule,
+    LeafletModule,
+    MatButtonModule,
+    MatRadioModule,
+    MatOptionModule,
+    MatSelectModule
+  ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'ru-RU'},
     {provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS},

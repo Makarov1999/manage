@@ -62,18 +62,19 @@
     left: 107px;
     width: 19px;
     height: 19px;
-    border: 1px solid #888888;
+    border: 3px solid #888888;
   }
 }
 
 .training__value--check:checked + .training__title--check::after {
   content: "";
   position: absolute;
-  top: 4px;
-  left: 108px;
-  width: 16px;
-  height: 16px;
+  top: 2px;
+  left: 107px;
+  width: 19px;
+  height: 19px;
   background-color: #0c83c7;
+  border: 3px solid #888888;
 }
 
 .education__progress {

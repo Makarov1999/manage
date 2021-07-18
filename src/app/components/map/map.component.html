@@ -1,40 +1,127 @@
-<!--<div class="page-main__wrapper">-->
+
   <section class="map">
     <div class="map-container">
-      <ya-map [center]="[54.7431, 55.9678]" [zoom]="12">
+      <section class="map__search map-search" *ngIf="isSearchOpen">
+        <h4 class="map-search__title">Поиск гидропостов</h4>
+        <form action="" class="map-search__form map-form" [formGroup]="formSearch" (ngSubmit)="searchSubmit()">
 
-        <ya-placemark *ngFor="let st of stations" [geometry]="[st.location.latitude, st.location.longitude]" (yaclick)="openStationInfo(st)" [options]="placemarkOptions" >
-        </ya-placemark>
-        <ya-geoobject
-          [feature]="{ geometry: { type: 'Polygon', coordinates: border} }"
-        ></ya-geoobject>
-      </ya-map>
-    </div>
-    <div class="marker-popup" [ngClass]="{active: isPopupOpen}">
-      <div class="marker-popup__container">
-        <button class="marker-popup__close-btn" type="button" (click)="popupClose()"></button>
-        <div class="marker-popup__wrapper">
-          <h4 class="marker-popup__title">Название: </h4>
-          <p class="marker-popup__value">{{currentMarker.name}}</p>
-        </div>
-        <div class="marker-popup__wrapper">
-          <h4 class="marker-popup__title">Тип гидропоста</h4>
-          <p class="marker-popup__value">{{currentMarker.type === 'auto' ? 'Автоматическая станция':'Гидропост'}}</p>
-        </div>
-        <div class="marker-popup__wrapper">
-          <h4 class="marker-popup__title">Широта: </h4>
-          <p class="marker-popup__value">{{currentMarker.location.latitude}}</p>
-        </div>
-        <div class="marker-popup__wrapper">
-          <h4 class="marker-popup__title">Долгота :</h4>
-          <p class="marker-popup__value">{{currentMarker.location.longitude}}</p>
+              <mat-form-field class="example-full-width" color="primary" >
+                <mat-label>Название</mat-label>
+                <input matInput placeholder="Назввание поста" [value]="postName" formControlName="name">
+              </mat-form-field>
+              <mat-radio-group class="map-radio-group" formControlName="filter" name="filter-list">
+                <mat-radio-button value="all" color="primary" [checked]="true" name="filter-list">Все</mat-radio-button>
+                <mat-radio-button value="hydro" color="primary" name="filter-list">Гидропост</mat-radio-button>
+                <mat-radio-button value="auto" color="primary" name="filter-list">Автоматическая станция</mat-radio-button>
+              </mat-radio-group>
+              <mat-form-field appearance="fill" class="map-search__field">
+                <mat-label>Река</mat-label>
+                <mat-select formControlName="river">
+                  <mat-option *ngFor="let river of rivers" [value]="river" >
+                    {{river}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+          <div class="map__buttons-container">
+            <button class="map-search__button--submit" mat-raised-button color="primary" type="submit">Искать</button>
+            <button mat-stroked-button color="primary" (click)="resetSearch()">Сбросить</button>
+          </div>
+        </form>
+        <button mat-icon-button color="warn" class="map-search__button--close" (click)="closeSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </section>
+      <section class="map__zones map-zones" *ngIf="isZoneFormOpen">
+        <h4 class="map-zones__title">Зоны затопления</h4>
+        <form action="" class="map-zones__form map-form" [formGroup]="formZones" (ngSubmit)="zonesSubmit()">
+          <mat-form-field appearance="fill" color="accent">
+            <mat-label>Дата</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date" [required]="true">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-radio-group class="map-radio-group" formControlName="dataType" name="data-list">
+            <mat-radio-button value="fact" color="primary" [checked]="true" name="data-list">Фактические значения</mat-radio-button>
+            <mat-radio-button value="forecast" color="primary" name="data-list">Спрогнозированные значения</mat-radio-button>
+          </mat-radio-group>
+          <div class="map__buttons-container">
+            <button class="map-zones__button--submit" mat-raised-button color="primary" type="submit">Построить</button>
+            <button mat-stroked-button color="primary" (click)="resetZones()" type="button">Сбросить</button>
+          </div>
+        </form>
+        <button mat-icon-button color="warn" class="map-zones__button--close" (click)="closeZones()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <p class="form-error" *ngIf="formError">{{formError}}</p>
+      </section>
+      <div id="map" class="map"
+           leaflet
+           [leafletOptions]="options"
+           [leafletLayers]="markers"
+           (leafletMapReady)="onMapReady($event)"
+      >
+      </div>
+      <div class="map__buttons map-buttons">
+        <div class="map-buttons__container">
+          <button mat-mini-fab color="primary" aria-label="Поиск гидропостов и автоматических станций" (click)="openSearch()">
+            <mat-icon>search</mat-icon>
+          </button>
+          <button mat-mini-fab color="primary" aria-label="Зоны затопления" (click)="openZones()">
+            <mat-icon>broken_image</mat-icon>
+          </button>
+          <button mat-mini-fab color="primary" aria-label="Легенда" (click)="openLegend()">
+            <mat-icon>description</mat-icon>
+          </button>
         </div>
       </div>
-      <a [routerLink]="['/manage/', currentMarker.id]" class="marker-popup__link">Перейти в панель управления</a>
+      <div class="map__legend legend" *ngIf="isLegendOpen">
+        <h4 class="legend__caption">Обозначения</h4>
+        <div class="legend__wrapper">
+          <img src="https://api.geoapify.com/v1/icon/?type=material&color=%2329418e&icon=brightness_low&iconType=material&apiKey=7e90dab7c9a541928f37e671633db7da" alt="">
+          <p class="legend__title">Cтационарные гидрологические посты</p>
+        </div>
+        <div class="legend__wrapper">
+          <img src="https://api.geoapify.com/v1/icon/?type=material&color=%2329418e&icon=brightness_auto&iconType=material&apiKey=7e90dab7c9a541928f37e671633db7da" alt="">
+          <p class="legend__title">Автоматические станции</p>
+        </div>
+        <button mat-icon-button color="warn" class="map-legend__button--close" (click)="closeLegend()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="marker-popup" *ngIf="isPopupOpen">
+        <div class="marker-popup__container">
+          <button class="marker-popup__close-btn" type="button" (click)="popupClose()"></button>
+          <div class="marker-popup__wrapper">
+            <h4 class="marker-popup__title">Название: </h4>
+            <p class="marker-popup__value">{{currentMarker.name}}</p>
+          </div>
+          <div class="marker-popup__wrapper">
+            <h4 class="marker-popup__title">Тип гидропоста</h4>
+            <p class="marker-popup__value">{{currentMarker.type === 'auto' ? 'Автоматическая станция':'Гидропост'}}</p>
+          </div>
+          <div class="marker-popup__wrapper">
+            <h4 class="marker-popup__title">Широта: </h4>
+            <p class="marker-popup__value">{{currentMarker.location.latitude}}</p>
+          </div>
+          <div class="marker-popup__wrapper">
+            <h4 class="marker-popup__title">Долгота :</h4>
+            <p class="marker-popup__value">{{currentMarker.location.longitude}}</p>
+          </div>
+          <div class="marker-popup__wrapper">
+            <h4 class="marker-popup__title">Опасный уровень</h4>
+            <p class="marker-popup__value">{{currentMarker.flood}}</p>
+          </div>
+          <div class="marker-popup__wrapper">
+            <h4 class="marker-popup__title">Уровень поймы</h4>
+            <p class="marker-popup__value">{{currentMarker.floodplain}}</p>
+          </div>
+        </div>
+        <a [routerLink]="['/manage/', currentMarker.id]" class="marker-popup__link">Перейти в панель управления</a>
+      </div>
     </div>
   </section>
 
-<!--</div>-->
 
 
 

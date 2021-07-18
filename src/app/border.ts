@@ -1,4 +1,6 @@
-export const BORDER =
+import {LatLngExpression} from 'leaflet';
+
+export const BORDER: LatLngExpression [] =
   [
     [
       55.91552,
