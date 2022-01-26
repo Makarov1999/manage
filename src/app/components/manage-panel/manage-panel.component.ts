@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../services/auth/auth.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {PredictionService} from '../../services/prediction.service';
+import {PredictionService} from '../../services/prediction/prediction.service';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
-import {ReportsService} from '../../services/reports.service';
+import {ReportsService} from '../../services/reports/reports.service';
 
 @Component({
   selector: 'app-manage-panel',

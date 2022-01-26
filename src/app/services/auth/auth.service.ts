@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {async, Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { AuthAPIRoutes } from './auth.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -8,22 +9,29 @@ import {async, Observable} from 'rxjs';
 export class AuthService {
   private isAuth = false;
   private accessToken: string | null = '';
-  constructor(private http: HttpClient) { }
-  checkAuth(body: FormData): Observable<any>  {
-    return this.http.post<any>('https://floodrb.ugatu.su/api/auth.direct', body);
+
+  constructor(private http: HttpClient) {
   }
+
+  checkAuth(body: FormData): Observable<any>  {
+    return this.http.post<any>(AuthAPIRoutes.Direct, body);
+  }
+
   checkLogout(): Observable<any> {
     const data: FormData = new FormData();
     data.append('access_token', this.getAccesToken());
     console.log(this.getAccesToken());
-    return this.http.post<any>('https://floodrb.ugatu.su/api/auth.logout', data);
+    return this.http.post<any>(AuthAPIRoutes.Logout, data);
   }
+
   login(): void {
     this.isAuth = true;
   }
+
   logout(): void {
     this.isAuth = false;
   }
+
   setAccessToken(accessToken: string | null): void {
     this.accessToken = accessToken;
   }

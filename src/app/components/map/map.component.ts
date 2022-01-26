@@ -1,8 +1,7 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, NgZone, OnInit} from '@angular/core';
-import {StationService} from '../../services/station.service';
-import {AuthService} from '../../services/auth.service';
+import {StationService} from '../../services/station/station.service';
+import {AuthService} from '../../services/auth/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ApiAnswerStations, Station} from '../../app.component';
 import {BORDER} from '../../border';
 import {precBorder} from '../../prec-border';
 import * as L from 'leaflet';
@@ -10,12 +9,14 @@ import {geoJSON, GeoJSON, icon, latLng, tileLayer} from 'leaflet';
 import {CustomMarker} from '../../custom';
 import {Feature} from '../../bash';
 import {FormControl, FormGroup} from '@angular/forms';
-import {DangerZonesService} from '../../services/danger-zones.service';
+import {DangerZonesService} from '../../services/danger-zones/danger-zones.service';
 import {ZoneData} from '../../zone-data';
 import {DefaultZoneValues, ZonesPosts} from '../../consts';
-import {MeasureService} from '../../services/measure.service';
+import {MeasureService} from '../../services/measure/measure.service';
 import * as moment from 'moment';
-import {PredictionService} from '../../services/prediction.service';
+import {PredictionService} from '../../services/prediction/prediction.service';
+import { IStation } from 'src/interfaces/station';
+import { IApiResponse } from 'src/interfaces/api-response';
 
 @Component({
   selector: 'app-map',
@@ -38,7 +39,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
     name: 'result-danger-zones',
     features: []
   };
-  stations: Station[] = [];
+  stations: IStation[] = [];
   postName = '';
   dangerZones: any = {};
   isSearchOpen = false;
@@ -70,7 +71,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
     opacity: 0.7,
     fillColor: '#0000ff'
   };
-  answer: ApiAnswerStations = {status: false, response: []};
+  answer: IApiResponse<IStation[]> = {status: false, response: []};
   border: any = BORDER;
   isPopupOpen = false;
   markers: any[] = [];
@@ -86,7 +87,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
     zoom: 8,
     center: latLng([ 54.7431, 55.9678])
   };
-  currentMarker: Station = {
+  currentMarker: IStation = {
     id: 0,
     type: 'auto',
     name: '',
@@ -115,7 +116,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.answer = this.route.snapshot.data.station;
-    if (this.answer.status) {
+    if (this.answer.response) {
       this.stations = this.answer.response;
       for (const station of this.stations) {
         let river = '';
@@ -162,7 +163,7 @@ export class MapComponent implements OnInit, AfterViewChecked {
     this.cdref.detectChanges();
   }
 
-  openStationInfo(station: Station): void {
+  openStationInfo(station: IStation): void {
     this.currentMarker = station;
     this.isPopupOpen = true;
 
@@ -291,13 +292,15 @@ export class MapComponent implements OnInit, AfterViewChecked {
           const date = moment(this.formZones.controls.date.value).format('YYYY-MM-DD');
           postIds = ZonesPosts.join(',');
           this.measureService.getMeasurementsForPosts(postIds, date, date).subscribe((res) => {
-            if (res.response) {
-              const zones = res.response;
+            console.log(res);
+            if (res) {
+              const zones = res;
+              console.log(zones);
               for (const zone of zones) {
                 const zoneElement: ZoneData = {postId: 0, value: 0};
                 if (zone.length > 0) {
-                  zoneElement.postId = zone[0].post_id;
-                  zoneElement.value = zone[0].water_level;
+                  zoneElement.postId = zone[0].postId;
+                  zoneElement.value = zone[0].waterLevel;
                   zonesData.push(zoneElement);
                 }
               }

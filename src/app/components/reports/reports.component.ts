@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
-import {ReportsService} from '../../services/reports.service';
+import {AuthService} from '../../services/auth/auth.service';
+import {ReportsService} from '../../services/reports/reports.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import * as moment from 'moment';
 

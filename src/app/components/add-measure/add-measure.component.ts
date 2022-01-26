@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../services/auth/auth.service';
 import {ActivatedRoute} from '@angular/router';
-import {MeasureService} from '../../services/measure.service';
+import {MeasureService} from '../../services/measure/measure.service';
 
 @Component({
   selector: 'app-add-measure',

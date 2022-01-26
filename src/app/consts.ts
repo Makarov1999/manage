@@ -1,4 +1,4 @@
-import {ZoneData} from './zone-data';
+import { ZoneData } from './zone-data';
 
 export const DefaultZoneValues: ZoneData[] = [
   {
@@ -51,3 +51,36 @@ export const ZonesPosts: number[] = [
   76275,
   76270
 ];
+
+export enum AuthAPIRoutes {
+  Direct = 'auth.direct',
+  Logout = 'auth.logout',
+}
+
+export enum StationsAPIRoutes {
+  GetAll = 'posts.get?offset=0&count=100',
+};
+
+export enum MeasureAPIRoutes {
+  Add = 'measurements.add',
+  Get = 'measurements.get',
+  AddExternal = 'externalData.addEntry',
+  GetByPostIds = 'measurements.getByPostsIds',
+}
+
+export enum ForecastAPIRoutes {
+  Init = 'forecast.init',
+  GetLastForStation = 'forecast.getLastForPost',
+  InitAll = 'forecast.queueAll',
+  GetByStartDate = 'forecast.getByStartDate',
+}
+
+export enum TrainingAPIRoutes {
+  Start = 'training.start',
+  GetStatus = 'training.getStatus',
+}
+
+export enum ReportsAPIRoutes {
+  LastForecasts = 'reports.createFromLastForecasts',
+  Analysis = 'reports.createAnalysisForDays',
+}

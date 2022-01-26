@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {MeasureService} from '../../services/measure.service';
-import {AuthService} from '../../services/auth.service';
+import {MeasureService} from '../../services/measure/measure.service';
+import {AuthService} from '../../services/auth/auth.service';
 import {ActivatedRoute} from '@angular/router';
 import {FormControl, FormGroup} from '@angular/forms';
 

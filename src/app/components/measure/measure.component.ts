@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
-import {MeasureService} from '../../services/measure.service';
+import {AuthService} from '../../services/auth/auth.service';
+import {MeasureService} from '../../services/measure/measure.service';
 import {ActivatedRoute} from '@angular/router';
 import {ChartDataSets, ChartType} from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
 import {FormControl, FormGroup} from '@angular/forms';
-import {PredictionService} from '../../services/prediction.service';
+import {PredictionService} from '../../services/prediction/prediction.service';
 
 @Component({
   selector: 'app-measure',
@@ -116,7 +116,7 @@ export class MeasureComponent implements OnInit {
         }
       });
       this.predictionService.getLastForPosts([this.route.snapshot.params.id].join(','), startDate)
-        .subscribe((result) => {
+        .subscribe((result: any) => {
           console.log(result);
           if (result.response[0]) {
             console.log(result.response);

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
-import {EducationService} from '../../services/education.service';
+import {AuthService} from '../../services/auth/auth.service';
+import {EducationService} from '../../services/education/education.service';
 
 @Component({
   selector: 'app-education',

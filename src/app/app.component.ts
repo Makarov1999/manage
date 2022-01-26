@@ -1,31 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {StationService} from './services/station.service';
-import {AuthService} from './services/auth.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { StationService } from './services/station/station.service';
+import { AuthService } from './services/auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IStation } from 'src/interfaces/station';
 
-export interface Location {
-  latitude: number;
-  longitude: number;
-}
 
-export interface Station {
-  id: number;
-  type: string;
-  name: string;
-  location: Location;
-  flood: number;
-  floodplain: number;
-}
-
-export interface ApiAnswerStations {
-  status: boolean;
-  response: Array<Station>;
-}
 
 export interface BodyAuth {
   login: string;
   password: string;
 }
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -33,7 +18,7 @@ export interface BodyAuth {
 })
 export class AppComponent implements OnInit {
   title = 'manage';
-  stations: Station[] = [];
+  stations: IStation[] = [];
   isAuthFormOpen = false;
   isAuthMessageOpen = false;
   authMessageText = '';
@@ -45,9 +30,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.st.getStations().subscribe((answer) => {
-      if (answer.status) {
-        this.stations = answer.response;
+    this.st.getStations().subscribe((res) => {
+      if (res.response) {
+        this.stations = res.response;
       }
     });
   }

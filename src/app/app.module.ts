@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MapComponent } from './components/map/map.component';
 import { ManagePanelComponent } from './components/manage-panel/manage-panel.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,6 +26,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatRadioButton, MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 import { ReportsComponent } from './components/reports/reports.component';
+import { environment } from 'src/environments/environment';
+import { BaseInterceptor } from './interceptors/base.interceptor';
 
 
 const mapConfig: YaConfig = {
@@ -67,9 +69,24 @@ const mapConfig: YaConfig = {
     MatSelectModule
   ],
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'ru-RU'},
-    {provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS},
-    DatePipe
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BaseInterceptor,
+      multi: true,
+    },
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'ru-RU'
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_DATE_FORMATS
+    },
+    DatePipe,
+    {
+      provide: 'API_BASE_URL',
+      useValue: environment.apiUrl,
+    }
     ],
   bootstrap: [AppComponent]
 })
